@@ -8,11 +8,11 @@ const secondCall = ['fsStats', 'disksIO', 'networkStats', 'currentLoad']
 const extTypes = ['bajoApp', 'bajoPlugin']
 
 async function tool ({ path, args = [] }) {
-  const { getConfig, print, importPackage, saveAsDownload } = this.bajo.helper
+  const { getConfig, print, importPkg, saveAsDownload } = this.bajo.helper
   const { prettyPrint } = this.bajoCli.helper
-  const [_, delay, stripAnsi] = await importPackage('lodash::bajo',
+  const [_, delay, stripAnsi] = await importPkg('lodash::bajo',
     'delay::bajo', 'strip-ansi::bajo-cli')
-  const { select } = await importPackage('@inquirer/prompts::bajo-cli')
+  const { select } = await importPkg('@inquirer/prompts::bajo-cli')
   const paths = _.concat(_.without(_.keys(si), ...withoutTypes), extTypes).sort()
   const choices = _.map(paths, c => {
     return { value: c }
