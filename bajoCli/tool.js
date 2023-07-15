@@ -10,9 +10,8 @@ const extTypes = ['bajoApp', 'bajoPlugin']
 async function tool ({ path, args = [] }) {
   const { getConfig, print, importPkg, saveAsDownload } = this.bajo.helper
   const { prettyPrint } = this.bajoCli.helper
-  const [_, delay, stripAnsi] = await importPkg('lodash::bajo',
-    'delay::bajo', 'strip-ansi::bajo-cli')
-  const { select } = await importPkg('@inquirer/prompts::bajo-cli')
+  const [_, delay, stripAnsi, select] = await importPkg('lodash::bajo',
+    'delay::bajo', 'strip-ansi::bajo-cli', '@inquirer/select::bajo-cli')
   const paths = _.concat(_.without(_.keys(si), ...withoutTypes), extTypes).sort()
   const choices = _.map(paths, c => {
     return { value: c }
@@ -20,13 +19,13 @@ async function tool ({ path, args = [] }) {
   const config = getConfig()
   if (!path) {
     path = await select({
-      message: `Please select a method:`,
+      message: print.format(`Please select a method:`),
       pageSize: 10,
       choices
     })
   }
-  if (!paths.includes(path)) print.fatal(`Unsupported methods '${path}'`)
-  const spinner = print.ora('Retrieving...').start()
+  if (!paths.includes(path)) print.fatal(`Unknown method '%s'`, path)
+  const spinner = print.bora('Retrieving...').start()
   const handler = path.startsWith('bajo') ? toolBajo[path].bind(this) : si[path]
   if (!path.startsWith('bajo') && withParams.includes(path)) args[0] = args[0] || '*'
   if (secondCall.includes(path)) {
@@ -39,7 +38,7 @@ async function tool ({ path, args = [] }) {
   if (config.save) {
     const file = `/${path}.${config.pretty ? 'txt' : 'json'}`
     const fullPath = await saveAsDownload(file, stripAnsi(result), 'bajoSysinfo')
-    print.ora(`Saved as '${fullPath}'`, true).succeed()
+    print.bora(`Saved as '%s'`, fullPath, { skipSilence: true }).succeed()
   } else console.log(result)
 }
 
