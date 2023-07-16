@@ -10,10 +10,10 @@ const extTypes = ['bajoApp', 'bajoPlugin']
 async function tool ({ path, args = [] }) {
   const { getConfig, print, importPkg, saveAsDownload } = this.bajo.helper
   const { prettyPrint } = this.bajoCli.helper
-  const [_, delay, stripAnsi, select] = await importPkg('lodash::bajo',
-    'delay::bajo', 'strip-ansi::bajo-cli', '@inquirer/select::bajo-cli')
-  const paths = _.concat(_.without(_.keys(si), ...withoutTypes), extTypes).sort()
-  const choices = _.map(paths, c => {
+  const { concat, without, keys, map } = await importPkg('lodash-es::bajo')
+  const [delay, stripAnsi, select] = await importPkg('delay::bajo', 'strip-ansi::bajo-cli', '@inquirer/select::bajo-cli')
+  const paths = concat(without(keys(si), ...withoutTypes), extTypes).sort()
+  const choices = map(paths, c => {
     return { value: c }
   })
   const config = getConfig()
