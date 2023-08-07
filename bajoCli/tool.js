@@ -40,7 +40,7 @@ async function tool ({ path, args = [] }) {
   result = config.pretty ? (await prettyPrint(result)) : JSON.stringify(result, null, 2)
   if (config.save) {
     const file = `/${path}.${config.pretty ? 'txt' : 'json'}`
-    await saveAsDownload(file, stripAnsi(result), 'bajoSysinfo')
+    await saveAsDownload(file, stripAnsi(result))
   } else console.log(result)
 }
 
