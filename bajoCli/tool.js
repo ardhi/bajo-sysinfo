@@ -28,7 +28,7 @@ async function tool ({ path, args = [] }) {
   const spinner = print.bora('Retrieving...').start()
   const handler = path.startsWith('bajo') ? toolBajo[path].bind(this) : si[path]
   if (!path.startsWith('bajo')) {
-    if (withParams.includes(path)) args[0] = args[0] || '*'
+    if (withParams.includes(path)) args[0] = args[0] ?? '*'
     else args = []
   }
   if (secondCall.includes(path)) {
