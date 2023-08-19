@@ -5,11 +5,12 @@ async function find (ctx, req, reply) {
   const { getInfo } = this.bajoSysinfo.helper
   const { isArray } = await importPkg('lodash-es')
   const item = await getInfo(req.params.type)
+  const filter = await getFilter(req)
   if (!isArray(item)) {
     const data = { data: item, success: true, statusCode: 200 }
     return await transformResult({ data, req, reply })
   }
-  const data = paginate(item, await prepPagination(getFilter(req)))
+  const data = paginate(item, await prepPagination(filter))
   return await transformResult({ data, req, reply, options: { forFind: true } })
 }
 
