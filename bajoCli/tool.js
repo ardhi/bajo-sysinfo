@@ -1,4 +1,4 @@
-async function tool ({ path, args = [] }) {
+async function tool ({ path, args = [], returnEarly }) {
   const { getConfig, print, importPkg, saveAsDownload } = this.bajo.helper
   const { prettyPrint } = this.bajoCli.helper
   const { getTypes, getInfo } = this.bajoSysinfo.helper
