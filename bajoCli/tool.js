@@ -1,5 +1,5 @@
-async function tool ({ path, args = [], returnEarly }) {
-  const { getConfig, print, importPkg, saveAsDownload } = this.bajo.helper
+async function tool ({ path, args = [] }) {
+  const { getConfig, print, importPkg, saveAsDownload, spinner } = this.bajo.helper
   const { prettyPrint } = this.bajoCli.helper
   const { getTypes, getInfo } = this.bajoSysinfo.helper
   const { map } = await importPkg('lodash-es')
@@ -16,14 +16,14 @@ async function tool ({ path, args = [], returnEarly }) {
       choices
     })
   }
-  const spinner = print.bora('Retrieving...').start()
+  const spin = spinner().start('Retrieving...')
   let result
   try {
     result = await getInfo(path, ...args)
   } catch (err) {
     print.fatal(err.message)
   }
-  spinner.info('Done!')
+  spin.info('Done!')
   result = config.pretty ? (await prettyPrint(result)) : JSON.stringify(result, null, 2)
   if (config.save) {
     const file = `/${path}.${config.pretty ? 'txt' : 'json'}`
