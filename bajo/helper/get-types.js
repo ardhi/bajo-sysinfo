@@ -4,9 +4,9 @@ const withoutTypes = ['version', 'observe', 'get', 'getAllData', 'getDynamicData
   'dockerAll']
 const extTypes = ['bajoApp', 'bajoPlugin']
 
-async function getTypes () {
-  const { importPkg, titleize } = this.bajo.helper
-  const { map, concat, without, keys, upperFirst } = await importPkg('lodash-es')
+function getTypes () {
+  const { titleize } = this.bajo.helper
+  const { map, concat, without, keys, upperFirst } = this.bajo.helper._
   const paths = concat(without(keys(si), ...withoutTypes), extTypes).sort()
 
   function transformer (item) {

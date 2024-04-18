@@ -2,8 +2,8 @@ async function tool ({ path, args = [] }) {
   const { getConfig, print, importPkg, saveAsDownload, spinner } = this.bajo.helper
   const { prettyPrint } = this.bajoCli.helper
   const { getTypes, getInfo } = this.bajoSysinfo.helper
-  const { map } = await importPkg('lodash-es')
-  const [stripAnsi, select] = await importPkg('bajo-cli:strip-ansi', 'bajo-cli:@inquirer/select')
+  const { map } = this.bajo.helper._
+  const [stripAnsi, select] = await importPkg('bajoCli:strip-ansi', 'bajoCli:@inquirer/select')
   const paths = await getTypes()
   const choices = map(paths, c => {
     return { value: c.id }

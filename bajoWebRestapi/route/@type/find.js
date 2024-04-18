@@ -1,9 +1,9 @@
 async function find (ctx, req, reply) {
-  const { paginate, importPkg } = this.bajo.helper
+  const { paginate } = this.bajo.helper
   const { prepPagination } = this.bajoDb.helper
   const { parseFilter, transformResult } = this.bajoWebRestapi.helper
   const { getInfo } = this.bajoSysinfo.helper
-  const { isArray } = await importPkg('lodash-es')
+  const { isArray } = this.bajo.helper._
   const item = await getInfo(req.params.type)
   const filter = parseFilter(req)
   if (!isArray(item)) {
