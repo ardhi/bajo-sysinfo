@@ -5,8 +5,8 @@ const withoutTypes = ['version', 'observe', 'get', 'getAllData', 'getDynamicData
 const extTypes = ['bajoApp', 'bajoPlugin']
 
 function getTypes () {
-  const { titleize } = this.bajo.helper
-  const { map, concat, without, keys, upperFirst } = this.bajo.helper._
+  const { titleize } = this.app.bajo.helper
+  const { map, concat, without, keys, upperFirst } = this.app.bajo.helper._
   const paths = concat(without(keys(si), ...withoutTypes), extTypes).sort()
 
   function transformer (item) {

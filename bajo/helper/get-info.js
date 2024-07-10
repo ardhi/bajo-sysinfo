@@ -5,10 +5,10 @@ const withParams = ['processLoad', 'services', 'inetChecksite', 'inetLatency']
 const secondCall = ['fsStats', 'disksIO', 'networkStats', 'currentLoad']
 
 async function getInfo (type, args) {
-  const { importPkg, error } = this.bajo.helper
+  const { importPkg, error } = this.app.bajo.helper
   const delay = await importPkg('delay')
-  const { map } = this.bajo.helper._
-  const { getTypes } = this.bajoSysinfo.helper
+  const { map } = this.app.bajo.helper._
+  const { getTypes } = this.helper
   const types = map(getTypes(), 'id')
   if (!types.includes(type)) throw error('Unsupported type \'%s\'', type)
   const handler = type.startsWith('bajo') ? toolBajo[type].bind(this) : si[type]

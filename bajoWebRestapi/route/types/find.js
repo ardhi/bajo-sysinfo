@@ -1,8 +1,8 @@
 async function find (ctx, req, reply) {
-  const { paginate } = this.bajo.helper
-  const { prepPagination } = this.bajoDb.helper
-  const { parseFilter, transformResult } = this.bajoWebRestapi.helper
-  const { getTypes } = this.bajoSysinfo.helper
+  const { paginate } = this.app.bajo.helper
+  const { prepPagination } = this.app.bajoDb.helper
+  const { parseFilter, transformResult } = this.app.bajoWebRestapi.helper
+  const { getTypes } = this.helper
   const filter = parseFilter(req)
   const all = await getTypes()
   const data = paginate(all, await prepPagination(filter))
