@@ -1,14 +1,12 @@
 async function tool ({ path, args = [] }) {
-  const { getConfig, print, importPkg, saveAsDownload, spinner } = this.bajo.helper
-  const { prettyPrint } = this.bajoCli.helper
-  const { getTypes, getInfo } = this.bajoSysinfo.helper
-  const { map } = this.bajo.helper._
+  const { print, importPkg, saveAsDownload, spinner } = this.app.bajo
+  const { prettyPrint } = this.app.bajoCli
+  const { map, get } = this.app.bajo.lib._
   const [stripAnsi, select] = await importPkg('bajoCli:strip-ansi', 'bajoCli:@inquirer/select')
-  const paths = await getTypes()
+  const paths = await this.getTypes()
   const choices = map(paths, c => {
     return { value: c.id }
   })
-  const config = getConfig()
   if (!path) {
     path = await select({
       message: print.__('Please select a method:'),
@@ -19,14 +17,17 @@ async function tool ({ path, args = [] }) {
   const spin = spinner().start('Retrieving...')
   let result
   try {
-    result = await getInfo(path, ...args)
+    result = await this.getInfo(path, ...args)
   } catch (err) {
     print.fatal(err.message)
   }
   spin.info('Done!')
-  result = config.pretty ? (await prettyPrint(result)) : JSON.stringify(result, null, 2)
-  if (config.save) {
-    const file = `/${path}.${config.pretty ? 'txt' : 'json'}`
+  const format = get(this, 'app.bajo.config.format')
+  const exts = map(this.app.bajo.configHandlers, 'ext')
+  if (format && !exts.includes(`.${format}`)) print.fatal('Invalid format \'%s\'', format)
+  result = await prettyPrint(result)
+  if (this.config.save) {
+    const file = `/${path}.${format ?? 'txt'}`
     await saveAsDownload(file, stripAnsi(result))
   } else console.log(result)
 }

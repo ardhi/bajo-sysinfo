@@ -1,10 +1,9 @@
 async function find (ctx, req, reply) {
-  const { paginate } = this.app.bajo.helper
-  const { prepPagination } = this.app.bajoDb.helper
-  const { parseFilter, transformResult } = this.app.bajoWebRestapi.helper
-  const { getInfo } = this.helper
-  const { isArray } = this.app.bajo.helper._
-  const item = await getInfo(req.params.type)
+  const { paginate } = this.app.bajo
+  const { prepPagination } = this.app.bajoDb
+  const { parseFilter, transformResult } = this.app.bajoWebRestapi
+  const { isArray } = this.app.bajo.lib._
+  const item = await this.getInfo(req.params.type)
   const filter = parseFilter(req)
   if (!isArray(item)) {
     const data = { data: item, success: true, statusCode: 200 }
