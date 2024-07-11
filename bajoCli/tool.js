@@ -4,6 +4,11 @@ async function tool ({ path, args = [] }) {
   const { map, get } = this.app.bajo.lib._
   const [stripAnsi, select] = await importPkg('bajoCli:strip-ansi', 'bajoCli:@inquirer/select')
   const paths = await this.getTypes()
+  const format = get(this, 'app.bajo.config.format')
+  const exts = ['json']
+  if (this.app.bajoConfig) exts.push('yml', 'yaml', 'toml')
+  if (format && !exts.includes(format)) print.fatal('Invalid format \'%s\'', format)
+
   const choices = map(paths, c => {
     return { value: c.id }
   })
@@ -22,10 +27,17 @@ async function tool ({ path, args = [] }) {
     print.fatal(err.message)
   }
   spin.info('Done!')
-  const format = get(this, 'app.bajo.config.format')
-  const exts = map(this.app.bajo.configHandlers, 'ext')
-  if (format && !exts.includes(`.${format}`)) print.fatal('Invalid format \'%s\'', format)
-  result = await prettyPrint(result)
+  switch (format) {
+    case 'yml':
+    case 'yaml': result = await this.app.bajoConfig.toYaml(result, true); break
+    case 'toml': result = await this.app.bajoConfig.toToml(result, true); break
+    case 'json':
+      if (this.app.bajoConfig) result = await this.app.bajoConfig.toJson(result, true)
+      else result = JSON.stringify(result, null, 2)
+      break
+    default:
+      result = await prettyPrint(result)
+  }
   if (this.config.save) {
     const file = `/${path}.${format ?? 'txt'}`
     await saveAsDownload(file, stripAnsi(result))
