@@ -4,6 +4,7 @@ async function tool ({ path, args = [] }) {
   const { map, get } = this.app.bajo.lib._
   const [stripAnsi, select] = await importPkg('bajoCli:strip-ansi', 'bajoCli:@inquirer/select')
   const paths = await this.getTypes()
+  const config = this.getConfig()
   const format = get(this, 'app.bajo.config.format')
   const exts = ['json']
   if (this.app.bajoConfig) exts.push('yml', 'yaml', 'toml')
@@ -38,7 +39,7 @@ async function tool ({ path, args = [] }) {
     default:
       result = await prettyPrint(result)
   }
-  if (this.config.save) {
+  if (config.save) {
     const file = `/${path}.${format ?? 'txt'}`
     await saveAsDownload(file, stripAnsi(result))
   } else console.log(result)
