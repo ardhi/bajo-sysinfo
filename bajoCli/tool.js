@@ -1,48 +1,30 @@
 async function tool ({ path, args = [] }) {
-  const { print, importPkg, saveAsDownload, spinner } = this.app.bajo
-  const { prettyPrint } = this.app.bajoCli
-  const { map, get } = this.app.bajo.lib._
-  const [stripAnsi, select] = await importPkg('bajoCli:strip-ansi', 'bajoCli:@inquirer/select')
+  const { importPkg } = this.app.bajo
+  const { map } = this.app.bajo.lib._
+  const { getOutputFormat, writeOutput } = this.app.bajoCli
+  const select = await importPkg('bajoCli:@inquirer/select')
   const paths = await this.getTypes()
-  const config = this.getConfig()
-  const format = get(this, 'app.bajo.config.format')
-  const exts = ['json']
-  if (this.app.bajoConfig) exts.push('yml', 'yaml', 'toml')
-  if (format && !exts.includes(format)) print.fatal('Invalid format \'%s\'', format)
+  const format = getOutputFormat()
 
   const choices = map(paths, c => {
     return { value: c.id }
   })
   if (!path) {
     path = await select({
-      message: print.__('Please select a method:'),
+      message: this.print.write('Please select a method:'),
       pageSize: 10,
       choices
     })
   }
-  const spin = spinner().start('Retrieving...')
+  const spin = this.print.spinner().start('Retrieving...')
   let result
   try {
     result = await this.getInfo(path, ...args)
   } catch (err) {
-    print.fatal(err.message)
+    this.print.fatal(err.message)
   }
   spin.info('Done!')
-  switch (format) {
-    case 'yml':
-    case 'yaml': result = await this.app.bajoConfig.toYaml(result, true); break
-    case 'toml': result = await this.app.bajoConfig.toToml(result, true); break
-    case 'json':
-      if (this.app.bajoConfig) result = await this.app.bajoConfig.toJson(result, true)
-      else result = JSON.stringify(result, null, 2)
-      break
-    default:
-      result = await prettyPrint(result)
-  }
-  if (config.save) {
-    const file = `/${path}.${format ?? 'txt'}`
-    await saveAsDownload(file, stripAnsi(result))
-  } else console.log(result)
+  await writeOutput(result, path, format)
 }
 
 export default tool
