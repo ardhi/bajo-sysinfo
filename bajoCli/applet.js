@@ -1,4 +1,4 @@
-async function tool ({ path, args = [] }) {
+async function applet (path, ...args) {
   const { importPkg } = this.app.bajo
   const { map } = this.app.bajo.lib._
   const { getOutputFormat, writeOutput } = this.app.bajoCli
@@ -27,4 +27,4 @@ async function tool ({ path, args = [] }) {
   await writeOutput(result, path, format)
 }
 
-export default tool
+export default applet
