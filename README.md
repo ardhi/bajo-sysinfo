@@ -6,7 +6,7 @@ Plugin name: **bajoSysinfo**, alias: **si**
 
 > <br />**Attention**: I do NOT accept any pull request at the moment, thanks!<br /><br />
 
-Serialport binding for [Bajo Framework](https://github.com/ardhi/bajo)
+System informations for [Bajo](https://github.com/ardhi/bajo)
 
 ## Installation
 
@@ -20,8 +20,7 @@ Now open your ```<bajo-data-dir>/config/.plugins``` and put ```bajo-sysinfo``` i
 
 ```
 ...
-bajo-emitter
-bajo-serialport
+bajo-sysinfo
 ...
 ```
 
