@@ -1,4 +1,4 @@
-async function find (ctx, req, reply) {
+async function find (req, reply) {
   const { paginate } = this.app.bajo
   const { prepPagination } = this.app.bajoDb
   const { parseFilter, transformResult } = this.app.bajoWebRestapi
