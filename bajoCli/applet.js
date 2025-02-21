@@ -11,12 +11,12 @@ async function applet (path, ...args) {
   })
   if (!path) {
     path = await select({
-      message: this.print.write('Please select a method:'),
+      message: this.print.write('selectMethod'),
       pageSize: 10,
       choices
     })
   }
-  const spin = this.print.spinner().start('Retrieving...')
+  const spin = this.print.spinner().start('retreiving')
   let result
   try {
     result = await this.getInfo(path, ...args)

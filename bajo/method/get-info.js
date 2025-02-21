@@ -9,7 +9,7 @@ async function getInfo (type, args) {
   const delay = await importPkg('delay')
   const { map } = this.app.bajo.lib._
   const types = map(this.getTypes(), 'id')
-  if (!types.includes(type)) throw this.error('Unsupported type \'%s\'', type)
+  if (!types.includes(type)) throw this.error('unsupported%s%s', this.print.write('type'), type)
   const handler = type.startsWith('bajo') ? toolBajo[type].bind(this) : si[type]
   if (!type.startsWith('bajo')) {
     if (withParams.includes(type)) args[0] = args[0] ?? '*'
