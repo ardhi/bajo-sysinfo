@@ -6,8 +6,8 @@ const secondCall = ['fsStats', 'disksIO', 'networkStats', 'currentLoad']
 
 async function getInfo (type, args) {
   const { importPkg } = this.app.bajo
-  const delay = await importPkg('delay')
-  const { map } = this.app.bajo.lib._
+  const delay = await importPkg('bajo:delay')
+  const { map } = this.lib._
   const types = map(this.getTypes(), 'id')
   if (!types.includes(type)) throw this.error('unsupported%s%s', this.print.write('type'), type)
   const handler = type.startsWith('bajo') ? toolBajo[type].bind(this) : si[type]

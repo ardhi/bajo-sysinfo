@@ -1,6 +1,6 @@
 async function applet (path, ...args) {
   const { importPkg } = this.app.bajo
-  const { map } = this.app.bajo.lib._
+  const { map } = this.lib._
   const { getOutputFormat, writeOutput } = this.app.bajoCli
   const select = await importPkg('bajoCli:@inquirer/select')
   const paths = await this.getTypes()

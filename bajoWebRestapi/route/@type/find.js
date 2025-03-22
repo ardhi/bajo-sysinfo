@@ -2,7 +2,7 @@ async function find (req, reply) {
   const { paginate } = this.app.bajo
   const { prepPagination } = this.app.bajoDb
   const { parseFilter, transformResult } = this.app.bajoWebRestapi
-  const { isArray } = this.app.bajo.lib._
+  const { isArray } = this.lib._
   const item = await this.getInfo(req.params.type)
   const filter = parseFilter(req)
   if (!isArray(item)) {
