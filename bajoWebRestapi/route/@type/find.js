@@ -1,5 +1,5 @@
 async function find (req, reply) {
-  const { paginate } = this.app.bajo
+  const { paginate } = this.lib.aneka
   const { prepPagination } = this.app.bajoDb
   const { parseFilter, transformResult } = this.app.bajoWebRestapi
   const { isArray } = this.lib._

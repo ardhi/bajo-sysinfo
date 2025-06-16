@@ -5,7 +5,7 @@ const withoutTypes = ['version', 'observe', 'get', 'getAllData', 'getDynamicData
 const extTypes = ['bajoApp', 'bajoPlugin']
 
 function getTypes () {
-  const { titleize } = this.app.bajo
+  const { titleize } = this.lib.aneka
   const { map, concat, without, keys, upperFirst } = this.lib._
   const paths = concat(without(keys(si), ...withoutTypes), extTypes).sort()
 
