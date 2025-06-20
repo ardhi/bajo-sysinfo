@@ -1,5 +1,5 @@
 import si from 'systeminformation'
-import toolBajo from '../../lib/tool/bajo.js'
+import toolBajo from '../lib/tool/bajo.js'
 
 const withParams = ['processLoad', 'services', 'inetChecksite', 'inetLatency']
 const secondCall = ['fsStats', 'disksIO', 'networkStats', 'currentLoad']
