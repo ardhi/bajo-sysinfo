@@ -1,15 +1,18 @@
 async function factory (pkgName) {
   const me = this
 
-  return class BajoSysinfo extends this.lib.Plugin {
+  class BajoSysinfo extends this.lib.Plugin {
+    static alias = 'si'
+
     constructor () {
       super(pkgName, me.app)
-      this.alias = 'si'
       this.config = {
         prettyPrint: true
       }
     }
   }
+
+  return BajoSysinfo
 }
 
 export default factory
