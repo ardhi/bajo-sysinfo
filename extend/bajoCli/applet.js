@@ -1,6 +1,6 @@
 async function applet (path, ...args) {
   const { importPkg } = this.app.bajo
-  const { map } = this.lib._
+  const { map } = this.app.lib._
   const { getOutputFormat, writeOutput } = this.app.bajoCli
   const select = await importPkg('bajoCli:@inquirer/select')
   const paths = await this.getTypes()
@@ -11,7 +11,7 @@ async function applet (path, ...args) {
   })
   if (!path) {
     path = await select({
-      message: this.print.write('selectMethod'),
+      message: this.t('selectMethod'),
       pageSize: 10,
       choices
     })

@@ -1,7 +1,7 @@
 async function factory (pkgName) {
   const me = this
 
-  class BajoSysinfo extends this.lib.Plugin {
+  class BajoSysinfo extends this.app.pluginClass.base {
     static alias = 'si'
 
     constructor () {

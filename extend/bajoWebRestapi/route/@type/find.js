@@ -1,8 +1,8 @@
 async function find (req, reply) {
-  const { paginate } = this.lib.aneka
+  const { paginate } = this.app.lib.aneka
   const { prepPagination } = this.app.bajoDb
   const { parseFilter, transformResult } = this.app.bajoWebRestapi
-  const { isArray } = this.lib._
+  const { isArray } = this.app.lib._
   const item = await this.getInfo(req.params.type)
   const filter = parseFilter(req)
   if (!isArray(item)) {

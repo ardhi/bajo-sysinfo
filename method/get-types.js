@@ -5,8 +5,8 @@ const withoutTypes = ['version', 'observe', 'get', 'getAllData', 'getDynamicData
 const extTypes = ['bajoApp', 'bajoPlugin']
 
 function getTypes () {
-  const { titleize } = this.lib.aneka
-  const { map, concat, without, keys, upperFirst } = this.lib._
+  const { titleize } = this.app.lib.aneka
+  const { map, concat, without, keys, upperFirst } = this.app.lib._
   const paths = concat(without(keys(si), ...withoutTypes), extTypes).sort()
 
   function transformer (item) {
