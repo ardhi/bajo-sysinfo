@@ -1,10 +1,9 @@
 async function applet (path, ...args) {
   const { importPkg } = this.app.bajo
   const { map } = this.app.lib._
-  const { getOutputFormat, writeOutput } = this.app.bajoCli
+  const { writeOutput } = this.app.bajoCli
   const select = await importPkg('bajoCli:@inquirer/select')
   const paths = await this.getTypes()
-  const format = getOutputFormat()
 
   const choices = map(paths, c => {
     return { value: c.id }
@@ -24,7 +23,7 @@ async function applet (path, ...args) {
     this.print.fatal(err.message)
   }
   spin.info('Done!')
-  await writeOutput(result, path, format)
+  await writeOutput(result, path, true)
 }
 
 export default applet
