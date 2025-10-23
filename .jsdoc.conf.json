@@ -14,14 +14,14 @@
       "homepageTitle": "BajoSysinfo API",
       "sections": ["Classes", "Events", "Modules", "Global"],
       "menu": [{
-        "title": "Bajo",
-        "link": "https://bajo.app"
-      }, {
         "title": "NPM",
         "link": "https://www.npmjs.com/package/bajo-sysinfo"
       }, {
         "title": "Github",
         "link": "https://github.com/ardhi/bajo-sysinfo"
+      }, {
+        "title": "Bajo",
+        "link": "https://bajo.app"
       }]
     }
   },
